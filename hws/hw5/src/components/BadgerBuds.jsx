@@ -6,29 +6,30 @@ import BadgerBudsDataContext from "../contexts/BadgerBudsDataContext";
 
 export default function BadgerBuds() {
 
-    const [buds, setBuds] = useState([]);
-    const [savedCatIds, savedBudsChange] = useState([])
+  const [buds, setBuds] = useState([]);
+  const [savedCatIds, savedBudsChange] = useState([])
+  const [adoptedBudIds, saveAdoptedBudIds] = useState([])
 
-    useEffect(() => {
-        fetch('https://cs571.org/rest/s25/hw5/buds', {
-            headers: {
-                "X-CS571-ID": CS571.getBadgerId()
-            }
-        })
-            .then(res => res.json())
-            .then(cats => {
-                setBuds(cats)
-            })
-    }, []);
+  useEffect(() => {
+    fetch('https://cs571.org/rest/s25/hw5/buds', {
+      headers: {
+        "X-CS571-ID": CS571.getBadgerId()
+      }
+    })
+      .then(res => res.json())
+      .then(cats => {
+        setBuds(cats)
+      })
+  }, []);
 
-    console.log(buds)
+  console.log(buds)
 
-    return <div>
-        <BadgerBudsNavbar />
-        <div style={{ margin: "1rem" }}>
-            <BadgerBudsDataContext.Provider value={{ buds, savedBudsChange }}>
-                <Outlet />
-            </BadgerBudsDataContext.Provider>
-        </div>
+  return <div>
+    <BadgerBudsNavbar />
+    <div style={{ margin: "1rem" }}>
+      <BadgerBudsDataContext.Provider value={{ buds, savedBudsChange, saveAdoptedBudIds }}>
+        <Outlet />
+      </BadgerBudsDataContext.Provider>
     </div>
+  </div>
 }
